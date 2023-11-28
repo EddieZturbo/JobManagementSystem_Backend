@@ -1,6 +1,7 @@
 package com.mq.jobManagement.back_end.service.impl;
 
 import com.mq.jobManagement.back_end.service.FilesStorageService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,18 @@ import java.util.stream.Stream;
  */
 @Service
 public class FilesStorageServiceImpl implements FilesStorageService {
-    private final Path root = Paths.get("E:\\Java_Project_Practice\\JobManagementSystem\\Front_End\\vuestic-admin\\public\\upload");
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
+
+    private Path getRoot() {
+        return Paths.get(uploadDir);
+    }
 
     @Override
     public void init() {
         try {
-            Files.createDirectories(root);
+            Files.createDirectories(getRoot());
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
@@ -35,7 +42,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     @Override
     public void save(MultipartFile file) {
         try {
-            Files.copy(file.getInputStream(), this.root.resolve(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), this.getRoot().resolve(file.getOriginalFilename()));
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
@@ -48,7 +55,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     @Override
     public Resource load(String filename) {
         try {
-            Path file = root.resolve(filename);
+            Path file = getRoot().resolve(filename);
             Resource resource = new UrlResource(file.toUri());
 
             if (resource.exists() || resource.isReadable()) {
@@ -64,7 +71,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     @Override
     public boolean delete(String filename) {
         try {
-            Path file = root.resolve(filename);
+            Path file = getRoot().resolve(filename);
             return Files.deleteIfExists(file);
         } catch (IOException e) {
             throw new RuntimeException("Error: " + e.getMessage());
@@ -73,13 +80,13 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
     @Override
     public void deleteAll() {
-        FileSystemUtils.deleteRecursively(root.toFile());
+        FileSystemUtils.deleteRecursively(getRoot().toFile());
     }
 
     @Override
     public Stream<Path> loadAll() {
         try {
-            return Files.walk(this.root, 1).filter(path -> !path.equals(this.root)).map(this.root::relativize);
+            return Files.walk(this.getRoot(), 1).filter(path -> !path.equals(this.getRoot())).map(this.getRoot()::relativize);
         } catch (IOException e) {
             throw new RuntimeException("Could not load the files!");
         }

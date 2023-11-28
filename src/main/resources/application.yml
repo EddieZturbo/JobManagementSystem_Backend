@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mq_jobmanagement?rewriteBatchedStatements=TRUE
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+mybatis:
+  type-aliases-package: com.mq.jobManagement.back_end.pojo

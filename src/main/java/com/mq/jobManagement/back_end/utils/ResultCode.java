@@ -18,7 +18,9 @@ public enum ResultCode {
     COULD_NOT_UPLOAD_FILE(498, "Could not upload the file"),
     COULD_NOT_DELETE_FILE(497, "Could not delete the file"),
     THE_FILE_DOES_NOT_EXIST(496, "The file does not exist"),
-    FILE_TOO_LARGE(499, "File too large!");
+    FILE_TOO_LARGE(499, "File too large!"),
+
+    MODIFY_CHECK_SIMILARITY_METHOD_FAIL(601,"修改检测方法失败,方法参数有误");
 
     private final int code;
     private final String message;

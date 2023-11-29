@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 public interface FilesStorageService {
     public void init();
 
-    public void save(MultipartFile file);
+    public void save(MultipartFile file, Long jobId);
 
     public Resource load(String filename);
 

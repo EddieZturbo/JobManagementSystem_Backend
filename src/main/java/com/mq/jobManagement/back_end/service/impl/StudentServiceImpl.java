@@ -11,5 +11,5 @@ import org.springframework.stereotype.Service;
  @create 2023-11-12 7:52 PM
  */
 @Service
-public class StudentServiceImpl extends CommonServiceImpl<Student,Integer, StudentMapper> implements StudentService  {
+public class StudentServiceImpl extends CommonServiceImpl<Student,Long, StudentMapper> implements StudentService  {
 }

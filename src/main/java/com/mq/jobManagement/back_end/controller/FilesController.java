@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,11 +26,11 @@ public class FilesController {
     @Autowired
     FilesStorageService storageService;
 
-    @PostMapping("/upload")
-    public Result uploadFile(@RequestParam("file") MultipartFile file) {
+    @PostMapping("/upload/{jobId}")
+    public Result uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("jobId") Long jobId) {
         String message = "";
         try {
-            storageService.save(file);
+            storageService.save(file,jobId);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return Result.ok(message);
@@ -51,11 +52,15 @@ public class FilesController {
         return Result.ok(fileInfos);
     }
 
+    /**
+     * 根据id获取文件的url和name
+     * @param filename
+     * @return
+     */
     @GetMapping("/files/{filename:.+}")
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = storageService.load(filename);
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+    public Result<FileInfo> getFile(@PathVariable String filename) {
+        String fileFullName = filename + ".pdf";
+        return Result.ok(new FileInfo(fileFullName,"http://localhost:9596/files/" + fileFullName));
     }
 
     @DeleteMapping("/files/{filename:.+}")

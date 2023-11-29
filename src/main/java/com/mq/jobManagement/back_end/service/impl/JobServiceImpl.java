@@ -11,5 +11,8 @@ import org.springframework.stereotype.Service;
  @create 2023-11-13 3:52 PM
  */
 @Service
-public class JobServiceImpl extends CommonServiceImpl<Job,Integer, JobMapper> implements JobService {
+public class JobServiceImpl extends CommonServiceImpl<Job,Long, JobMapper> implements JobService {
+    public boolean insertJob(Job job) {
+        return baseMapper.insertJob(job) > 0 ? true : false;
+    }
 }

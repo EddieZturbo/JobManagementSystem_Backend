@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Mapper;
  @create 2023-11-12 7:51 PM
  */
 @Mapper
-public interface StudentMapper extends CommonMapper<Student,Integer> {
+public interface StudentMapper extends CommonMapper<Student,Long> {
 }

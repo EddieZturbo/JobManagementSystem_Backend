@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
  @author EddieZhang
  @create 2023-11-12 7:51 PM
  */
-public interface StudentService extends CommonService<Student,Integer> {
+public interface StudentService extends CommonService<Student,Long> {
 }

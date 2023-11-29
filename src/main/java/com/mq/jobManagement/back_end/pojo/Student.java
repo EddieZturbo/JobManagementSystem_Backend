@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("student")
-public class Student extends CommonEntity<Integer> {
+public class Student extends CommonEntity<Long> {
     private String name;
 }

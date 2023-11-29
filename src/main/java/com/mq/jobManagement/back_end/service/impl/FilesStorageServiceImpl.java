@@ -40,9 +40,9 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file) {
+    public void save(MultipartFile file, Long jobId) {
         try {
-            Files.copy(file.getInputStream(), this.getRoot().resolve(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), this.getRoot().resolve(jobId + ".pdf"));
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");

@@ -4,14 +4,11 @@ import com.mq.jobManagement.back_end.pojo.FileInfo;
 import com.mq.jobManagement.back_end.service.FilesStorageService;
 import com.mq.jobManagement.back_end.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.io.File;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +20,8 @@ import static com.mq.jobManagement.back_end.utils.ResultCode.*;
  */
 @RestController
 public class FilesController {
+    @Value("${file.download-url}")
+    private String downloadUrl;
     @Autowired
     FilesStorageService storageService;
 
@@ -39,7 +38,7 @@ public class FilesController {
         }
     }
 
-    @GetMapping("/files")
+    @GetMapping("/file")
     public Result<List<FileInfo>> getListFiles() {
         List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
@@ -60,7 +59,7 @@ public class FilesController {
     @GetMapping("/files/{filename:.+}")
     public Result<FileInfo> getFile(@PathVariable String filename) {
         String fileFullName = filename + ".pdf";
-        return Result.ok(new FileInfo(fileFullName,"http://localhost:9596/files/" + fileFullName));
+        return Result.ok(new FileInfo(fileFullName,downloadUrl + fileFullName));
     }
 
     @DeleteMapping("/files/{filename:.+}")

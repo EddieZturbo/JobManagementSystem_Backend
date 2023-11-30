@@ -6,10 +6,12 @@ import com.mq.jobManagement.back_end.pojo.Student;
 import com.mq.jobManagement.back_end.service.StudentService;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
+
 /**
  @author EddieZhang
  @create 2023-11-12 7:52 PM
  */
 @Service
-public class StudentServiceImpl extends CommonServiceImpl<Student,Long, StudentMapper> implements StudentService  {
+public class StudentServiceImpl extends CommonServiceImpl<Student, String, StudentMapper> implements StudentService  {
 }

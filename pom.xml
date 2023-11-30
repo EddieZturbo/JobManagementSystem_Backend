@@ -63,12 +63,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter-test</artifactId>
-            <version>2.3.1</version>
-            <scope>test</scope>
-        </dependency>
 
         <!--处理与其他服务器的请求操作相关start-->
         <dependency>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class FilesController {
     FilesStorageService storageService;
 
     @PostMapping("/upload/{jobId}")
-    public Result uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("jobId") Long jobId) {
+    public Result uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("jobId") String jobId) {
         String message = "";
         try {
             storageService.save(file,jobId);
@@ -38,7 +39,7 @@ public class FilesController {
         }
     }
 
-    @GetMapping("/file")
+    @GetMapping("/files")
     public Result<List<FileInfo>> getListFiles() {
         List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();

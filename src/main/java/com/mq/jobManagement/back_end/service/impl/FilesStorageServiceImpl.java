@@ -9,11 +9,9 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.stream.Stream;
 
 /**
@@ -40,7 +38,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     }
 
     @Override
-    public void save(MultipartFile file, Long jobId) {
+    public void save(MultipartFile file, String jobId) {
         try {
             Files.copy(file.getInputStream(), this.getRoot().resolve(jobId + ".pdf"));
         } catch (Exception e) {

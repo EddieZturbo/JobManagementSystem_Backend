@@ -1,14 +1,16 @@
 package com.mq.jobManagement.back_end.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mq.jobManagement.back_end.common.CommonEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 /**
@@ -19,7 +21,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("jobs")
-public class Job extends CommonEntity<Long> {
+public class Job extends CommonEntity<String> {
         @TableField(exist = false)
         private Long no;//序号
         private Integer score;

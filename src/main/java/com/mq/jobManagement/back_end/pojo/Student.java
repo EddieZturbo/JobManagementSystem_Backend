@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
+
 /**
  @author EddieZhang
  @create 2023-11-12 7:44 PM
@@ -16,6 +18,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("student")
-public class Student extends CommonEntity<Long> {
+public class Student extends CommonEntity<String> {
     private String name;
 }

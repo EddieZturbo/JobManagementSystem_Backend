@@ -5,11 +5,13 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.Resource;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.mq.jobManagement.back_end.mapper")
+@ComponentScan(basePackages = {"com.mq.jobManagement.back_end.*"})
 public class JobManagementBackEndApplication implements CommandLineRunner {
     @Resource
     FilesStorageService storageService;

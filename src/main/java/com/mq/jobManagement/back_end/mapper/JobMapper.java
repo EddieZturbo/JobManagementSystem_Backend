@@ -8,6 +8,7 @@ import com.mq.jobManagement.back_end.pojo.Job;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Map;
  @create 2023-11-13 3:50 PM
  */
 @Mapper
-public interface JobMapper extends CommonMapper<Job,Long> {
+public interface JobMapper extends CommonMapper<Job, String> {
 
     @Override
     default IPage<Job> page(Map<String, Object> params) {

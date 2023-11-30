@@ -1,9 +1,8 @@
 package com.mq.jobManagement.back_end.common;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -14,8 +13,7 @@ import java.util.ArrayList;
  */
 @Data
 public class CommonEntity<K> {
-    @JsonSerialize(using = ToStringSerializer.class)
-    @TableId
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private K id;
 
     @TableField(exist = false)

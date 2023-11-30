@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigInteger;
+
 import static com.mq.jobManagement.back_end.utils.ResultCode.ADD_DATA_FAILURE;
 
 /**
@@ -18,16 +20,15 @@ import static com.mq.jobManagement.back_end.utils.ResultCode.ADD_DATA_FAILURE;
  */
 @RestController
 @RequestMapping("/job")
-public class JobController extends CommonController<JobService, Job,Long> {
+public class JobController extends CommonController<JobService, Job,String> {
     @Autowired
     private JobService jobService;
 
     @PostMapping("insertJob")
-    public Result<Long> insertJob(@RequestBody Job entity) {
-        boolean insertJob = jobService.insertJob(entity);
-        if (insertJob) {
-            Long id = entity.getId();
-            return Result.ok(id);
+    public Result<String> insertJob(@RequestBody Job entity) {
+        String insertJob = jobService.insertJob(entity);
+        if (!insertJob.equals("-1L")) {
+            return Result.ok(insertJob);
         } else {
             return Result.error(ADD_DATA_FAILURE);
         }

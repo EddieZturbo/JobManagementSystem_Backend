@@ -10,6 +10,8 @@ spring:
       enabled: true
       max-file-size: 50MB
       max-request-size: 50MB
-
-mybatis:
+mybatis-plus:
   type-aliases-package: com.mq.jobManagement.back_end.pojo
+  global-config:
+    db-config:
+      id-type: assign_id

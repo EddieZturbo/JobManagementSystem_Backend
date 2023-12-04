@@ -20,7 +20,8 @@ public enum ResultCode {
     THE_FILE_DOES_NOT_EXIST(496, "The file does not exist"),
     FILE_TOO_LARGE(499, "File too large!"),
 
-    MODIFY_CHECK_SIMILARITY_METHOD_FAIL(601,"修改检测方法失败,方法参数有误");
+    MODIFY_CHECK_SIMILARITY_METHOD_FAIL(601,"修改检测方法失败,方法参数有误"),
+    CHECK_SIMILARITY_FAIL(602,"抄袭检测失败");
 
     private final int code;
     private final String message;

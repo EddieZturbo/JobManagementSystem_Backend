@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mq_jobmanagement?rewriteBatchedStatements=TRUE
     username: root
-    password: root
+    password: 774747245
     type: com.alibaba.druid.pool.DruidDataSource
   servlet:
     multipart:

@@ -57,7 +57,7 @@ public class FilesController {
      * @param filename
      * @return
      */
-    @GetMapping("/files/{filename:.+}")
+    @GetMapping("/file/{filename:.+}")
     public Result<FileInfo> getFile(@PathVariable String filename) {
         String fileFullName = filename + ".pdf";
         return Result.ok(new FileInfo(fileFullName,downloadUrl + fileFullName));

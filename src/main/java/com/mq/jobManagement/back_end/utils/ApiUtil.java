@@ -15,7 +15,7 @@ public class ApiUtil {
     /**
      * 作业抄袭情况,返回相似度表，异步接口
      */
-    public static String Matrix_Check_Similarity_Async = Matrix_PATH + "/check_similarity_async";
+    public static String Matrix_Check_Similarity_Async = Matrix_PATH + "/jms/check_similarity_async";
 
 
     /**

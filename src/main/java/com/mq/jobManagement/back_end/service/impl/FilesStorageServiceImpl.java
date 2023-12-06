@@ -9,9 +9,11 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
-import java.nio.file.*;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 /**
@@ -23,15 +25,21 @@ public class FilesStorageServiceImpl implements FilesStorageService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
+    @Value("${file.backendUpload-dir}")
+    private String backendUploadDir;
 
     private Path getRoot() {
         return Paths.get(uploadDir);
     }
 
+    private Path getBackendUploadDir() {
+        return Paths.get(backendUploadDir);
+    }
     @Override
     public void init() {
         try {
             Files.createDirectories(getRoot());
+            Files.createDirectories(getBackendUploadDir());
         } catch (IOException e) {
             throw new RuntimeException("Could not initialize folder for upload!");
         }
@@ -41,6 +49,20 @@ public class FilesStorageServiceImpl implements FilesStorageService {
     public void save(MultipartFile file, String jobId) {
         try {
             Files.copy(file.getInputStream(), this.getRoot().resolve(jobId + ".pdf"));
+        } catch (Exception e) {
+            if (e instanceof FileAlreadyExistsException) {
+                throw new RuntimeException("A file of that name already exists.");
+            }
+
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public String saveAndReturnId(MultipartFile file, String jobId) {
+        try {
+            Files.copy(file.getInputStream(), this.getBackendUploadDir().resolve(jobId + ".pdf"));
+            return jobId;
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException) {
                 throw new RuntimeException("A file of that name already exists.");
@@ -89,4 +111,5 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             throw new RuntimeException("Could not load the files!");
         }
     }
+
 }

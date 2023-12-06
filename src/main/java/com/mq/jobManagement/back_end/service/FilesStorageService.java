@@ -23,4 +23,6 @@ public interface FilesStorageService {
     public void deleteAll();
 
     public Stream<Path> loadAll();
+
+    public String saveAndReturnId(MultipartFile file, String jobId);
 }

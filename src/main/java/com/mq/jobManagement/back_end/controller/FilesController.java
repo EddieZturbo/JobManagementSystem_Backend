@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
-import java.math.BigInteger;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.mq.jobManagement.back_end.utils.ResultCode.*;
@@ -34,6 +34,22 @@ public class FilesController {
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return Result.ok(message);
+        } catch (Exception e) {
+            return Result.error(COULD_NOT_UPLOAD_FILE);
+        }
+    }
+
+    /**
+     * 上传文件并返回文件id
+     * @param file
+     * @return
+     */
+    @PostMapping("/backendUpload")
+    public Result uploadFileReturnId(@RequestParam("file") MultipartFile file) {
+        String jobId = UUID.randomUUID().toString();
+        try {
+            storageService.saveAndReturnId(file,jobId);
+            return Result.ok(jobId);
         } catch (Exception e) {
             return Result.error(COULD_NOT_UPLOAD_FILE);
         }

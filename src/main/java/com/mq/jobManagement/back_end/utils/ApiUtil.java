@@ -19,9 +19,9 @@ public class ApiUtil {
 
 
     /**
-     * 作业抄袭情况,渲染后给前端一个文件存储在WebLib的编号
+     * 作业抄袭情况,获取两个文件的相似高亮显示，渲染后给前端一个文件存储在jms的编号
      */
-    public static String Matrix_Mark_Similarity = Matrix_PATH + "/mark_similarity";
+    public static String Matrix_Mark_Similarity = Matrix_PATH + "/matrix_lms/jms/highlight";
 
 
     /**
@@ -32,4 +32,6 @@ public class ApiUtil {
      * 动态切换抄袭检测方法
      */
     public static String Matrix_Modify_Check_Similarity_Method=Matrix_PATH+"/modify_check_similarity_method";
+
+
 }

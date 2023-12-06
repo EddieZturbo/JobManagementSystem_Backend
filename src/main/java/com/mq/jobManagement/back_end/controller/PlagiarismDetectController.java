@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,13 @@ public class PlagiarismDetectController {
     Logger logger = LoggerFactory.getLogger(PlagiarismDetectController.class);
     private JsonUtil jsonUtil = new JsonUtil();
 
+
+    /**
+     * 动态修改抄袭检测方法
+     * @param methodId
+     * @return
+     * @throws Exception
+     */
     @PostMapping("/modify/check/similarity/method/{methodId}")
     public Result modifyCheckSimilarityMethod(@PathVariable("methodId") String methodId) throws Exception {
         JSONObject json = plagiarismDetectService.modify_check_similarity_method(String.valueOf(methodId));
@@ -81,4 +89,26 @@ public class PlagiarismDetectController {
         logger.info("matrix返回的信息：" + json.toString());
         return Result.ok(json);
     }
+
+
+    /****
+     * 获取两个文件的相似高亮显示
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/mark_similarity")
+    public Result markSimilarity(@RequestParam("homeworkOne") String homeworkIdOne,@RequestParam("homeworkTwo") String homeworkIdTwo) throws Exception {
+        Map<String, String> out = new HashMap<>();
+        out.put("homeworkIdOne", String.valueOf(homeworkIdOne));
+        out.put("homeworkIdTwo",String.valueOf( homeworkIdTwo));
+        String homeworkStr = jsonUtil.bean2jsonExt(out);
+        System.out.println(homeworkStr);
+        JSONObject json = plagiarismDetectService.markSimilarity(homeworkStr);
+        logger.info("matrix返回的信息：" + json.toString());
+        return Result.ok(json);
+    }
+
+
+
 }

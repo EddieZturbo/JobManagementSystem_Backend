@@ -37,6 +37,8 @@ public class PlagiarismDetectServiceImpl implements PlagiarismDetectService {
         }
     }
 
+
+
     /***
      * 动态修改抄袭检测的方法
      * @param methodId
@@ -60,6 +62,14 @@ public class PlagiarismDetectServiceImpl implements PlagiarismDetectService {
         Map<String, String> params = new Hashtable<>();
         params.put("stu", homework);
         return this.requestService(params, ApiUtil.Matrix_Check_Similarity_Async);
+    }
+
+    @Override
+    public JSONObject markSimilarity(String homeworkIds) throws Exception {
+
+        Map<String, String> params = new Hashtable<>();
+        params.put("attach", homeworkIds);
+        return this.requestService(params, ApiUtil.Matrix_Mark_Similarity);
     }
 
 

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -168,10 +169,4 @@ public class HttpClientUtil {
             return null;
         }
     }
-
-
-
-
-
-
 }

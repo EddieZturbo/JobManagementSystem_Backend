@@ -32,6 +32,13 @@ public class ApiUtil {
      * 动态切换抄袭检测方法
      */
     public static String Matrix_Modify_Check_Similarity_Method=Matrix_PATH+"/modify_check_similarity_method";
+    /****
+     * 动态切换参考文献部分抄袭检测方法
+     */
+    public static String Matrix_Modify_Reference_Similarity_Method=Matrix_PATH+"/modify_reference_similarity_method";
 
-
+    /**
+     * 辅助评分
+     */
+    public static String Matrix_Auxiliary_Score = Matrix_PATH + "/jms/auxiliary_score";
 }

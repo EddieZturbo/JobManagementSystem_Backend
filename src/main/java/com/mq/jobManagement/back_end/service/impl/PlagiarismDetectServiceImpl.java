@@ -51,6 +51,19 @@ public class PlagiarismDetectServiceImpl implements PlagiarismDetectService {
         return this.requestService(params, ApiUtil.Matrix_Modify_Check_Similarity_Method);
     }
 
+    /***
+     * 动态修改参考文献部分抄袭检测的方法
+     * @param methodId
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public JSONObject modify_reference_similarity_method(String methodId) throws Exception {
+        Map<String, String> params = new Hashtable<>();
+        params.put("methodId", methodId);
+        return this.requestService(params, ApiUtil.Matrix_Modify_Reference_Similarity_Method);
+    }
+
     /****
      * 检查作业相似度
      * @param homework
@@ -70,6 +83,13 @@ public class PlagiarismDetectServiceImpl implements PlagiarismDetectService {
         Map<String, String> params = new Hashtable<>();
         params.put("attach", homeworkIds);
         return this.requestService(params, ApiUtil.Matrix_Mark_Similarity);
+    }
+
+    @Override
+    public JSONObject auxiliaryScore(String homework) throws Exception {
+        Map<String, String> params = new Hashtable<>();
+        params.put("stu", homework);
+        return this.requestService(params, ApiUtil.Matrix_Auxiliary_Score);
     }
 
 

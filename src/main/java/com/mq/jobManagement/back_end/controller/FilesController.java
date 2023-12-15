@@ -39,6 +39,24 @@ public class FilesController {
         }
     }
 
+
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
+    @PostMapping("/upload")
+    public Result uploadFile(@RequestParam("file") MultipartFile file) {
+        String message = "";
+        try {
+            storageService.save(file);
+            message = "Uploaded the file successfully: " + file.getOriginalFilename();
+            return Result.ok(message);
+        } catch (Exception e) {
+            return Result.error(COULD_NOT_UPLOAD_FILE);
+        }
+    }
+
     /**
      * 上传文件并返回文件id
      * @param file

@@ -16,6 +16,8 @@ public interface FilesStorageService {
 
     public void save(MultipartFile file, String jobId);
 
+    public void save(MultipartFile file);
+
     public Resource load(String filename);
 
     public boolean delete(String filename);

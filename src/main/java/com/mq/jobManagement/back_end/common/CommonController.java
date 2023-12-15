@@ -1,5 +1,6 @@
 package com.mq.jobManagement.back_end.common;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.mq.jobManagement.back_end.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import static com.mq.jobManagement.back_end.utils.ResultCode.*;
  @author EddieZhang
  @create 2023-11-13 10:15 AM
  */
+@SuppressWarnings("all")
 public class CommonController<S extends CommonService<E,K>, E extends CommonEntity, K extends Serializable> {
     @Autowired
     protected S baseService;
@@ -26,11 +28,13 @@ public class CommonController<S extends CommonService<E,K>, E extends CommonEnti
 
     @PostMapping("page")
     public Result page(@RequestBody(required = false) Map<String, Object> params) throws Exception{
-        return Result.ok(baseService.page(params));
+        IPage<E> page = baseService.page(params);
+        page.getRecords().forEach(e -> e.setNo(page.getRecords().indexOf(e) + 1L));
+        return Result.ok(page);
     }
 
-    @GetMapping("list")
-    public Result<List<E>> list(@RequestParam(required = false) Map<String, Object> params) throws Exception{
+    @PostMapping("list")
+    public Result<List<E>> list(@RequestBody(required = false) Map<String, Object> params) throws Exception{
         List<E> list = baseService.list(params);
         return list.size() != 0 ? Result.ok(list) : Result.error(DATA_ABSENCE);
     }

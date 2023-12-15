@@ -17,5 +17,8 @@ public class CommonEntity<K> {
     private K id;
 
     @TableField(exist = false)
+    private Long no;//序号
+
+    @TableField(exist = false)
     private ArrayList<K> ids;
 }

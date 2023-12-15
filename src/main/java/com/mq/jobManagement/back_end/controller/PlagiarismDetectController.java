@@ -64,7 +64,7 @@ public class PlagiarismDetectController {
      */
     @PostMapping("/modify/reference/similarity/method/{methodId}")
     public Result modifyReferenceSimilarityMethod(@PathVariable("methodId") String methodId) throws Exception {
-        JSONObject json = plagiarismDetectService.modify_check_similarity_method(String.valueOf(methodId));
+        JSONObject json = plagiarismDetectService.modify_reference_similarity_method(String.valueOf(methodId));
         logger.info("matrix返回的信息：" + json.toString());
         if (!json.getString("result").equals("success")) {
             return Result.error(MODIFY_CHECK_SIMILARITY_METHOD_FAIL);
@@ -138,7 +138,7 @@ public class PlagiarismDetectController {
         double ratio = ServletRequestUtils.getDoubleParameter(request, "ratio", 0.6); //抄袭所在比例
         System.out.println(ratio);
         Map<String,Object> param=new HashMap<>();
-        param.put("workCode",workCode);
+        param.put("work_code",workCode);
         List<Job> jobList=jobService.list(param);
         List<String> homeworkList = new ArrayList<>();
         for (Job job : jobList) {
@@ -154,8 +154,95 @@ public class PlagiarismDetectController {
         out.put("homework", jsonUtil.list2jsonExt2(homeworkList));
         String homeworkStr = jsonUtil.bean2jsonExt(out);
         System.out.println(homeworkStr);
-        JSONObject json = plagiarismDetectService.checkHomeworkSimilaryToMatrix(homeworkStr);
+        JSONObject json = plagiarismDetectService.auxiliaryScore(homeworkStr);
         logger.info("matrix返回的信息：" + json.toString());
+        return Result.ok(json);
+    }
+
+    /***
+     * 检测一个作业里的抄袭情况
+     * 通过作业id获取这个作业的全部提交的作业
+     * @param methodId
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/check_similarity_async_test/{workCode}")
+    public Result checkSimilarity_test(@PathVariable("workCode") String workCode, HttpServletRequest request) throws Exception {
+        double similar = ServletRequestUtils.getDoubleParameter(request, "similar", 0.2);
+        System.out.println(similar);
+        String jsonString="{\n" +
+                "        \"failCount\": 0,\n" +
+                "        \"result\": {\n" +
+                "            \"matrix\": [\n" +
+                "                {\n" +
+                "                    \"account\": \"1001\",\n" +
+                "                    \"maxSimilarity\": \"0.2\",\n" +
+                "                    \"name\": \"Eddie\",\n" +
+                "                    \"similarList\": [\n" +
+                "                        {\n" +
+                "                            \"account\": \"1001\",\n" +
+                "                            \"name\": \"Eddie\",\n" +
+                "                            \"similarity\": \"0\"\n" +
+                "                        },\n" +
+                "                        {\n" +
+                "                            \"account\": \"1002\",\n" +
+                "                            \"name\": \"Eddie1\",\n" +
+                "                            \"similarity\": \"0.2\"\n" +
+                "                        }\n" +
+                "                    ]\n" +
+                "                },\n" +
+                "                {\n" +
+                "                    \"account\": \"1002\",\n" +
+                "                    \"maxSimilarity\": \"0.2\",\n" +
+                "                    \"name\": \"Eddie1\",\n" +
+                "                    \"similarList\": [\n" +
+                "                        {\n" +
+                "                            \"account\": \"1001\",\n" +
+                "                            \"name\": \"Eddie\",\n" +
+                "                            \"similarity\": \"0.2\"\n" +
+                "                        },\n" +
+                "                        {\n" +
+                "                            \"account\": \"1001\",\n" +
+                "                            \"name\": \"Eddie\",\n" +
+                "                            \"similarity\": \"0\"\n" +
+                "                        }\n" +
+                "                    ]\n" +
+                "                }\n" +
+                "            ],\n" +
+                "            \"result\": \"success\",\n" +
+                "            \"trouble_list\": []\n" +
+                "        },\n" +
+                "        \"status\": \"Task completed!\",\n" +
+                "        \"successCount\": 2,\n" +
+                "        \"total\": 2\n" +
+                "    }";
+        JSONObject json = JSONObject.fromObject(jsonString);
+        return Result.ok(json);
+    }
+
+
+    /****
+     * 获取两个文件的相似高亮显示
+     * 传参：两个作业文件的id
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/mark_similarity_test")
+    public Result markSimilarity_test(@RequestParam("homeworkOne") String homeworkIdOne,@RequestParam("homeworkTwo") String homeworkIdTwo) throws Exception {
+        String jsonString=" {\n" +
+                "        \"code\": \"200\",\n" +
+                "        \"result\": \"success\",\n" +
+                "        \"highlightPdf\": [\n" +
+                "            \"f873102f-6913-4778-8d4a-6d0600138a1b\",\n" +
+                "            \"204f7a5b-1897-4e9b-b3e8-80d6a103027d\"\n" +
+                "        ],\n" +
+                "        \"attachName\": [\n" +
+                "            \"1729480862809071638.pdf\",\n" +
+                "            \"1729480862809071639.pdf\"\n" +
+                "        ]\n" +
+                "    }";
+        JSONObject json = JSONObject.fromObject(jsonString);
         return Result.ok(json);
     }
 

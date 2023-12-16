@@ -114,7 +114,7 @@ public class PlagiarismDetectController {
      * @throws Exception
      */
     @PostMapping("/mark_similarity")
-    public Result markSimilarity(@RequestParam("homeworkOne") String homeworkIdOne,@RequestParam("homeworkTwo") String homeworkIdTwo) throws Exception {
+    public Result markSimilarity(@RequestParam("homeworkIdOne") String homeworkIdOne,@RequestParam("homeworkIdTwo") String homeworkIdTwo) throws Exception {
         Map<String, String> out = new HashMap<>();
         out.put("homeworkIdOne", String.valueOf(homeworkIdOne));
         out.put("homeworkIdTwo",String.valueOf( homeworkIdTwo));

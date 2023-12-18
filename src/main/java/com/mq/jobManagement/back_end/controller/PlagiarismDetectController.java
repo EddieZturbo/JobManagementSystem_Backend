@@ -170,52 +170,7 @@ public class PlagiarismDetectController {
     public Result checkSimilarity_test(@PathVariable("workCode") String workCode, HttpServletRequest request) throws Exception {
         double similar = ServletRequestUtils.getDoubleParameter(request, "similar", 0.2);
         System.out.println(similar);
-        String jsonString="{\n" +
-                "        \"failCount\": 0,\n" +
-                "        \"result\": {\n" +
-                "            \"matrix\": [\n" +
-                "                {\n" +
-                "                    \"account\": \"1001\",\n" +
-                "                    \"maxSimilarity\": \"0.2\",\n" +
-                "                    \"name\": \"Eddie\",\n" +
-                "                    \"similarList\": [\n" +
-                "                        {\n" +
-                "                            \"account\": \"1001\",\n" +
-                "                            \"name\": \"Eddie\",\n" +
-                "                            \"similarity\": \"0\"\n" +
-                "                        },\n" +
-                "                        {\n" +
-                "                            \"account\": \"1002\",\n" +
-                "                            \"name\": \"Eddie1\",\n" +
-                "                            \"similarity\": \"0.2\"\n" +
-                "                        }\n" +
-                "                    ]\n" +
-                "                },\n" +
-                "                {\n" +
-                "                    \"account\": \"1002\",\n" +
-                "                    \"maxSimilarity\": \"0.2\",\n" +
-                "                    \"name\": \"Eddie1\",\n" +
-                "                    \"similarList\": [\n" +
-                "                        {\n" +
-                "                            \"account\": \"1001\",\n" +
-                "                            \"name\": \"Eddie\",\n" +
-                "                            \"similarity\": \"0.2\"\n" +
-                "                        },\n" +
-                "                        {\n" +
-                "                            \"account\": \"1001\",\n" +
-                "                            \"name\": \"Eddie\",\n" +
-                "                            \"similarity\": \"0\"\n" +
-                "                        }\n" +
-                "                    ]\n" +
-                "                }\n" +
-                "            ],\n" +
-                "            \"result\": \"success\",\n" +
-                "            \"trouble_list\": []\n" +
-                "        },\n" +
-                "        \"status\": \"Task completed!\",\n" +
-                "        \"successCount\": 2,\n" +
-                "        \"total\": 2\n" +
-                "    }";
+        String jsonString="{\"failCount\":0,\"result\":{\"matrix\":[{\"account\":\"1001\",\"homeworkId\":\"1729480862809071638\",\"maxSimilarity\":\"0.2\",\"name\":\"Eddie\",\"similarList\":[{\"account\":\"1001\",\"homeworkId\":\"1729480862809071638\",\"name\":\"Eddie\",\"similarity\":\"0\"},{\"account\":\"1001\",\"homeworkId\":\"1729480862809071639\",\"name\":\"Eddie\",\"similarity\":\"0.2\"}]},{\"account\":\"1001\",\"homeworkId\":\"1729480862809071639\",\"maxSimilarity\":\"0.2\",\"name\":\"Eddie\",\"similarList\":[{\"account\":\"1001\",\"homeworkId\":\"1729480862809071638\",\"name\":\"Eddie\",\"similarity\":\"0.2\"},{\"account\":\"1001\",\"homeworkId\":\"1729480862809071639\",\"name\":\"Eddie\",\"similarity\":\"0\"}]}],\"result\":\"success\",\"trouble_list\":[]},\"status\":\"Task completed!\",\"successCount\":2,\"total\":2}";
         JSONObject json = JSONObject.fromObject(jsonString);
         return Result.ok(json);
     }

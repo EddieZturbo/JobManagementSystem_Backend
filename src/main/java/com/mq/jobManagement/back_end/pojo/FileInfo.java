@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
  @create 2023-11-26 10:40 PM
  */
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class FileInfo {
     private String StudentName;
     private String fileName;
     private String url;
 
-    public FileInfo(String fileName, String url) {
+    public FileInfo(String fileName, String url,String studentName) {
         this.fileName = fileName;
         this.url = url;
+        this.StudentName = studentName;
     }
 }

@@ -20,4 +20,9 @@ import java.math.BigInteger;
 @TableName("student")
 public class Student extends CommonEntity<String> {
     private String name;
+    @TableField("student_code")
+    private Integer studentCode;
+    private Integer age;
+    private String gender;
+    private String major;
 }

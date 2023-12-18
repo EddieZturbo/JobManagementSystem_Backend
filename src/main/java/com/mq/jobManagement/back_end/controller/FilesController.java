@@ -1,7 +1,9 @@
 package com.mq.jobManagement.back_end.controller;
 
 import com.mq.jobManagement.back_end.pojo.FileInfo;
+import com.mq.jobManagement.back_end.pojo.Job;
 import com.mq.jobManagement.back_end.service.FilesStorageService;
+import com.mq.jobManagement.back_end.service.JobService;
 import com.mq.jobManagement.back_end.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,6 +27,8 @@ public class FilesController {
     private String downloadUrl;
     @Autowired
     FilesStorageService storageService;
+    @Autowired
+    private JobService jobService;
 
     @PostMapping("/upload/{jobId}")
     public Result uploadFile(@RequestParam("file") MultipartFile file, @PathVariable("jobId") String jobId) {
@@ -77,10 +81,15 @@ public class FilesController {
     public Result<List<FileInfo>> getListFiles() {
         List<FileInfo> fileInfos = storageService.loadAll().map(path -> {
             String filename = path.getFileName().toString();
+            Job job = jobService.get(filename.substring(0, filename.length() - 4));
             String url = MvcUriComponentsBuilder
                     .fromMethodName(FilesController.class, "getFile", path.getFileName().toString()).build().toString();
 
-            return new FileInfo(filename, url);
+            if (job != null){
+            return new FileInfo(filename, url, job.getStudentName());
+            }else {
+                return new FileInfo(filename, url, "null");
+            }
         }).collect(Collectors.toList());
 
         return Result.ok(fileInfos);
@@ -94,7 +103,8 @@ public class FilesController {
     @GetMapping("/file/{filename:.+}")
     public Result<FileInfo> getFile(@PathVariable String filename) {
         String fileFullName = filename + ".pdf";
-        return Result.ok(new FileInfo(fileFullName,downloadUrl + fileFullName));
+        Job job = jobService.get(filename);
+        return Result.ok(new FileInfo(fileFullName,downloadUrl + fileFullName,job.getStudentName()));
     }
 
     @DeleteMapping("/files/{filename:.+}")

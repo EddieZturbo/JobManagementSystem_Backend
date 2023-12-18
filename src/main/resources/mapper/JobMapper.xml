@@ -8,4 +8,8 @@
         INSERT INTO jobs (score, student_code, student_name, is_qualify, is_commit, job_status, commit_time, work_code, work_name, course_code, course_name)
         VALUES ( #{score}, #{studentCode}, #{studentName}, #{isQualify}, #{isCommit}, #{jobStatus}, #{commitTime}, #{workCode}, #{workName}, #{courseCode}, #{courseName})
     </insert>
+
+    <select id="getCommittedWorkName" resultType="string">
+        select distinct work_name from jobs where is_commit = 1;
+    </select>
 </mapper>

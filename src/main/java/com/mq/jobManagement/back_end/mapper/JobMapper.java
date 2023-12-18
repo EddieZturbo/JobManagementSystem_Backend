@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,9 @@ public interface JobMapper extends CommonMapper<Job, String> {
      */
     int insertJob(Job job);
 
+    /**
+     * 获取已经提交的job的workName
+     * @return
+     */
+    List<String> getCommittedWorkName();
 }

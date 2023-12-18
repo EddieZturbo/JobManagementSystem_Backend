@@ -8,8 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import static com.mq.jobManagement.back_end.utils.ResultCode.ADD_DATA_FAILURE;
-import static com.mq.jobManagement.back_end.utils.ResultCode.UPDATE_DATA_FAILURE;
+import java.util.List;
+
+import static com.mq.jobManagement.back_end.utils.ResultCode.*;
 
 /**
  @author EddieZhang
@@ -47,5 +48,11 @@ public class JobController extends CommonController<JobService, Job, String> {
         }else{
             return Result.error(UPDATE_DATA_FAILURE);
         }
+    }
+
+    @GetMapping("getCommittedWorkName")
+    public Result<List<String>> getCommittedWorkName() {
+        List<String> committedWorkName = jobService.getCommittedWorkName();
+        return committedWorkName.size() != 0 ? Result.ok(committedWorkName) : Result.error(DATA_ABSENCE);
     }
 }

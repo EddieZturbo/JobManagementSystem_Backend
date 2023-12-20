@@ -135,8 +135,9 @@ public class PlagiarismDetectController {
      */
     @PostMapping("/auxiliary_score/{workCode}")
     public Result auxiliaryScore(@PathVariable("workCode") String workCode, HttpServletRequest request) throws Exception {
-        double ratio = ServletRequestUtils.getDoubleParameter(request, "ratio", 0.6); //抄袭所在比例
-        System.out.println(ratio);
+        double ratio_pl = ServletRequestUtils.getDoubleParameter(request, "ratio_pl", 0.5); //抄袭所在比例
+        double ratio_content = ServletRequestUtils.getDoubleParameter(request, "ratio_content", 0.3); //content所在比例
+        double ratio_ref = ServletRequestUtils.getDoubleParameter(request, "ratio_ref", 0.2); //ref所在比例
         Map<String,Object> param=new HashMap<>();
         param.put("work_code",workCode);
         List<Job> jobList=jobService.list(param);
@@ -149,8 +150,12 @@ public class PlagiarismDetectController {
             map.put("homeworkId", String.valueOf(job.getId()));
             homeworkList.add(jsonUtil.bean2jsonExt(map));
         }
+        Map<String, String> map = new HashMap<>();
+        map.put("content",String.valueOf(ratio_content));
+        map.put("plagiarism", String.valueOf(ratio_pl));
+        map.put("references", String.valueOf(ratio_ref));
         Map<String, String> out = new HashMap<>();
-        out.put("ratio", String.valueOf(ratio));
+        out.put("ratio", jsonUtil.bean2jsonExt(map));
         out.put("homework", jsonUtil.list2jsonExt2(homeworkList));
         String homeworkStr = jsonUtil.bean2jsonExt(out);
         System.out.println(homeworkStr);

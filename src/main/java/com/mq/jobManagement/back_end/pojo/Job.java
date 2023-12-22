@@ -20,6 +20,8 @@ import java.util.Date;
 @TableName("jobs")
 public class Job extends CommonEntity<String> {
         private Integer score;
+        @TableField("auxiliary_score")
+        private String auxiliaryScore;
         @TableField("student_code")
         private Integer studentCode;
         @TableField("student_name")

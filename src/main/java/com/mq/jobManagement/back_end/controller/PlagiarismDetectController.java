@@ -5,6 +5,7 @@ import com.mq.jobManagement.back_end.service.JobService;
 import com.mq.jobManagement.back_end.service.PlagiarismDetectService;
 import com.mq.jobManagement.back_end.utils.JsonUtil;
 import com.mq.jobManagement.back_end.utils.Result;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,6 +162,19 @@ public class PlagiarismDetectController {
         System.out.println(homeworkStr);
         JSONObject json = plagiarismDetectService.auxiliaryScore(homeworkStr);
         logger.info("matrix返回的信息：" + json.toString());
+        JSONObject resultObject = json.getJSONObject("result");
+        JSONArray matrixArray = resultObject.getJSONArray("matrix");
+        for (Object item : matrixArray) {
+            JSONObject matrixItem = (JSONObject) item;
+            String homeworkId = matrixItem.getString("homeworkId");
+            double auxiliaryScore = matrixItem.getDouble("auxiliary_score");
+            Job job=jobService.get(homeworkId);
+            job.setAuxiliaryScore(auxiliaryScore);
+            boolean updateStatus=jobService.update(job);
+            if(updateStatus){
+                System.out.println("job更新成功");
+            }
+        }
         return Result.ok(json);
     }
 

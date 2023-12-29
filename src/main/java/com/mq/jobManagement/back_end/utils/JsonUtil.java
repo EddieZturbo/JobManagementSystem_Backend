@@ -1,5 +1,9 @@
 package com.mq.jobManagement.back_end.utils;
 
+import net.sf.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +60,15 @@ public class JsonUtil {
         return json.toString();
     }
 
-
-
+    public  Map<String, Object> jsonObjectToMap(JSONObject jsonObject) {
+        Map<String, Object> map = new HashMap<>();
+        // 使用迭代器遍历 JSONObject 的键值对，并将其放入 Map 中
+        Iterator<?> keys = jsonObject.keys();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
+            Object value = jsonObject.get(key);
+            map.put(key, value);
+        }
+        return map;
+    }
 }

@@ -1,5 +1,8 @@
 package com.mq.jobManagement.back_end.service.impl;
 
+import com.mq.jobManagement.back_end.common.CommonServiceImpl;
+import com.mq.jobManagement.back_end.mapper.DetectionResultMapper;
+import com.mq.jobManagement.back_end.pojo.DetectionResult;
 import com.mq.jobManagement.back_end.service.PlagiarismDetectService;
 import com.mq.jobManagement.back_end.utils.ApiUtil;
 import com.mq.jobManagement.back_end.utils.HttpClientUtil;
@@ -19,7 +22,7 @@ import java.util.Map;
  * @date 2023/11/28 16:06
  */
 @Service
-public class PlagiarismDetectServiceImpl implements PlagiarismDetectService {
+public class PlagiarismDetectServiceImpl extends CommonServiceImpl<DetectionResult, String, DetectionResultMapper> implements PlagiarismDetectService {
     Logger logger = LoggerFactory.getLogger(PlagiarismDetectServiceImpl.class);
 
 

@@ -1,6 +1,7 @@
 package com.mq.jobManagement.back_end.common;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
  @author EddieZhang
  @create 2023-11-13 10:15 AM
  */
-public interface CommonService<E, K extends Serializable> {
+public interface CommonService<E, K extends Serializable> extends IService<E> {
     E get(K id);
 
     List<E> list(Map<String, Object> params);
